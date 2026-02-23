@@ -1,0 +1,127 @@
+[
+  {
+    "scenarioId": "phishing-angela-predetermined",
+    "title": "Phishing & Social Engineering",
+    "steps": [
+      {
+        "stepId": 1,
+        "speaker": "Angela",
+        "dialogue": "Good day, Manager. I am Angela, your AI assistant. An urgent notification claiming to be from our corporate bank requires your immediate manual review.",
+        "picture": "angela-neutral",
+        "choices": [
+          { "label": "Continue", "nextStep": 2 }
+        ]
+      },
+      {
+        "stepId": 2,
+        "speaker": "Manager",
+        "dialogue": "Bring it up on the screen, Angela.",
+        "picture": "angela-listening",
+        "choices": [
+          { "label": "Continue", "nextStep": 3 }
+        ]
+      },
+      {
+        "stepId": 3,
+        "speaker": "Angela",
+        "dialogue": "It states: 'URGENT: Suspicious activity detected. Click the button below immediately to verify your identity, or your corporate funds will be permanently frozen.'",
+        "picture": "angela-alert",
+        "choices": [
+          { "label": "Continue", "nextStep": 4 }
+        ]
+      },
+      {
+        "stepId": 4,
+        "speaker": "Manager",
+        "dialogue": "If our accounts are frozen, our entire operation will halt. Present the authorization link to me.",
+        "picture": "angela-listening",
+        "choices": [
+          { "label": "Continue", "nextStep": 5 }
+        ]
+      },
+      {
+        "stepId": 5,
+        "speaker": "Angela",
+        "dialogue": "As you wish, Manager. The interface is now active on your terminal.",
+        "picture": "angela-neutral",
+        "choices": [
+          { "label": "Click the 'Verify Identity' link", "nextStep": 6 }
+        ]
+      },
+      {
+        "stepId": 6,
+        "speaker": "Angela",
+        "dialogue": "Processing... I have observed you inputting your administrative credentials into the provided portal.",
+        "picture": "angela-neutral",
+        "choices": [
+          { "label": "Continue", "nextStep": 7 }
+        ]
+      },
+      {
+        "stepId": 7,
+        "speaker": "Manager",
+        "dialogue": "Yes, the verification is complete. Is the account secure now?",
+        "picture": "angela-listening",
+        "choices": [
+          { "label": "Continue", "nextStep": 8 }
+        ]
+      },
+      {
+        "stepId": 8,
+        "speaker": "Angela",
+        "dialogue": "Quite the opposite. A sum of $15,000 has just been transferred to an untraceable offshore server. Your credentials have been completely compromised.",
+        "picture": "angela-disappointed",
+        "choices": [
+          { "label": "Continue", "nextStep": 9 }
+        ]
+      },
+      {
+        "stepId": 9,
+        "speaker": "Manager",
+        "dialogue": "What?! How did that happen? That was an official banking email!",
+        "picture": "angela-listening",
+        "choices": [
+          { "label": "Continue", "nextStep": 10 }
+        ]
+      },
+      {
+        "stepId": 10,
+        "speaker": "Angela",
+        "dialogue": "It was not. You have predictably fallen victim to 'Phishing.' It is a social engineering attack where attackers disguise themselves as a trustworthy entity to trick targets into revealing sensitive data.",
+        "picture": "angela-explaining",
+        "explanation": {
+          "title": "What is Phishing?",
+          "body": "A social engineering attack where attackers impersonate a trustworthy entity—such as a bank, employer, or service provider—to trick targets into revealing sensitive data like login credentials, credit card numbers, or personal information."
+        },
+        "choices": [
+          { "label": "Continue", "nextStep": 11 }
+        ]
+      },
+      {
+        "stepId": 11,
+        "speaker": "Angela",
+        "dialogue": "This specific use case—urgent fake alerts regarding bank accounts—is the most frequent cybercrime globally. It serves as the primary entry point for major corporate data breaches.",
+        "picture": "angela-explaining",
+        "explanation": {
+          "title": "How Common is Phishing?",
+          "body": "Phishing accounts for over 80% of reported security incidents. Fake bank alerts are the #1 phishing vector, and serve as the primary entry point for major corporate data breaches worldwide."
+        },
+        "choices": [
+          { "label": "Continue", "nextStep": 12 }
+        ]
+      },
+      {
+        "stepId": 12,
+        "speaker": "Angela",
+        "dialogue": "To mitigate future incompetence, remember your protection protocols: Never click unsolicited links, verify issues with the bank directly, and ensure Multi-Factor Authentication (MFA) is enabled on all accounts. I expect better judgment tomorrow.",
+        "picture": "angela-disappointed",
+        "explanation": {
+          "title": "Protection Protocols",
+          "body": "1. Never click unsolicited links — always navigate to sites directly.\n2. Verify issues with the institution directly via their official contact channels.\n3. Enable Multi-Factor Authentication (MFA) on all accounts to add a second layer of defense."
+        },
+        "isEnding": true,
+        "status": "failed"
+      }
+    ]
+  }
+]

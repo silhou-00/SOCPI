@@ -22,7 +22,7 @@ description: general rules for building frontend
 - primarily use rem for sizing of all components and layouts for responsive design
 - if corresponding size can be translated to for example: h-24, instead of rem, use it
 - use rem for font sizing
-- use @themes for the color palette, font-family, font-color, etc.
+- use @theme for the color palette, font-family, font-color, etc.
 - use icons from lucide-react instead of emojis
 
 ### Structure
