@@ -1,0 +1,20 @@
+[
+  {
+    "id": "data-privacy-act",
+    "title": "Data Privacy Act of 2012",
+    "icon": "/Icons/data-privacy-icon.png",
+    "description": "This law protects personal information collected by government agencies, businesses, and educational institutions. It requires organizations to implement security measures, obtain consent before processing personal data, and report data breaches. It also gives individuals the right to access, correct, and request deletion of their personal information.\n\nEnforcement of this law is handled by the National Privacy Commission, which investigates complaints, imposes penalties, and promotes data privacy awareness."
+  },
+  {
+    "id": "cybercrime-prevention-act",
+    "title": "Cybercrime Prevention Act of 2012",
+    "icon": "/Icons/cybercrime-prevention-icon.png",
+    "description": "This law criminalizes offenses such as illegal access, online fraud, identity theft, and phishing. It strengthens the government's ability to prosecute cybercriminals who misuse digital identities.\n\nIt provides law enforcement with the legal tools necessary to investigate, track, and prosecute individuals or groups engaged in cyber-related criminal activities."
+  },
+  {
+    "id": "revised-penal-code",
+    "title": "Revised Penal Code",
+    "icon": "/Icons/revised-penal-icon.png",
+    "description": "Traditional fraud-related offenses under the Revised Penal Code may apply when identity theft leads to financial damage or deception.\n\nTogether with the Data Privacy Act and Cybercrime Prevention Act, these laws create a legal framework that aims to protect Filipino citizens from identity theft, ensure accountability for data handlers, and penalize cybercriminals."
+  }
+]

@@ -14,8 +14,8 @@
   --color-jungle-mist-900: #30444a;
   --color-jungle-mist-950: #202c31;
 
-  /** Color for Background */
-  --color-background: #000000;
+  /** Color for Gradient Background */
+  --color-background: linear-gradient(0deg, rgba(19,19,38,1) 0%, rgba(35,37,59,1) 50%);
 }
 
 /* ── Custom Scrollbar ── */
