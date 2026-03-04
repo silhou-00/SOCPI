@@ -1,0 +1,58 @@
+[
+  {
+    "id": "profile-visibility",
+    "category": "Profile Privacy",
+    "statement": "Is your social media profile set to public where anyone can view your posts and personal info?",
+    "riskIfYes": true,
+    "explanation": "A public profile allows strangers — including identity thieves — to freely browse your photos, posts, friend list, and personal details. Setting your profile to private ensures only approved followers can see your content, significantly reducing your exposure to social engineering attacks."
+  },
+  {
+    "id": "personal-details-visible",
+    "category": "Profile Privacy",
+    "statement": "Do you display your phone number, email address, or birthday on your social media profile?",
+    "riskIfYes": true,
+    "explanation": "Contact details and birthdays displayed publicly are goldmines for attackers. They can be used to reset your passwords, answer security questions, or send highly targeted phishing messages that appear legitimate because they reference your real information."
+  },
+  {
+    "id": "mfa-enabled",
+    "category": "Account Security",
+    "statement": "Have you enabled Multi-Factor Authentication (MFA) on all your social media accounts?",
+    "riskIfYes": false,
+    "explanation": "MFA requires an additional verification step — such as a code from an authenticator app, biometric scan, or hardware key — beyond your password. If someone steals your password through a data breach, they still cannot log in without your second factor."
+  },
+  {
+    "id": "login-alerts",
+    "category": "Account Security",
+    "statement": "Have you turned on unrecognized login alerts and active session monitoring on your accounts?",
+    "riskIfYes": false,
+    "explanation": "Login alerts notify you immediately when someone accesses your account from a new device or location. Active session monitoring lets you review and revoke access from devices you don't recognize, catching unauthorized access before damage is done."
+  },
+  {
+    "id": "unknown-followers",
+    "category": "Social Awareness",
+    "statement": "Do you accept follow or friend requests from people you have never met in person?",
+    "riskIfYes": true,
+    "explanation": "Fake profiles are frequently used for social engineering. Scammers build trust through mutual connections, then use the access to harvest your personal data, send phishing links, or impersonate you to your real friends and family."
+  },
+  {
+    "id": "third-party-apps",
+    "category": "App Permissions",
+    "statement": "Do you grant third-party apps or quizzes access to your social media accounts without reviewing permissions?",
+    "riskIfYes": true,
+    "explanation": "Third-party apps connected to your social accounts often request excessive permissions — reading your messages, posting on your behalf, or accessing your contacts. Regularly audit and revoke permissions for apps you no longer use or don't trust."
+  },
+  {
+    "id": "location-tagging",
+    "category": "Content Sharing",
+    "statement": "Do you tag your real-time location or check in at places on social media?",
+    "riskIfYes": true,
+    "explanation": "Real-time location sharing broadcasts exactly where you are — and importantly, where you are NOT (like home). This information can be exploited for stalking, burglary, or building a pattern-of-life profile used in targeted social engineering attacks."
+  },
+  {
+    "id": "password-unique",
+    "category": "Account Security",
+    "statement": "Do you use a unique password for each of your social media accounts?",
+    "riskIfYes": false,
+    "explanation": "When major platforms suffer data breaches, leaked passwords are tested against other services in credential-stuffing attacks. Using a unique password for each account ensures that one breach doesn't compromise all your social media presence at once."
+  }
+]
