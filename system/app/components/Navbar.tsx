@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { Menu, X, Siren, Scale, ShieldCheck, Share2 } from "lucide-react";
 
 const navLinks = [
-  { href: "/", label: "The Threat", icon: Siren },
+  { href: "/threat", label: "The Threat", icon: Siren },
   { href: "/legal-laws", label: "Legal Laws", icon: Scale },
   { href: "/privacy-tools", label: "Privacy Tools", icon: ShieldCheck },
   { href: "/social-media", label: "Social Media", icon: Share2 },

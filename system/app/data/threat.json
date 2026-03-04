@@ -44,9 +44,13 @@
         "speaker": "Angela",
         "dialogue": "As you wish, Manager. The interface is now active on your terminal.",
         "picture": "angela-neutral",
-        "choices": [
-          { "label": "Click the 'Verify Identity' link", "nextStep": 6 }
-        ]
+        "email": {
+          "from": "NexIink Security <security-update@nexiink-support.com>",
+          "subject": "URGENT: Suspiciuos activity detected on your account",
+          "body": "Dear Administrator,\n\nWe have detected an unathorized login attempt from an unrecognized IP adress. To protect your coporate funds, your account access has been temporarilly restricted.\n\nPlease verify your identity immediatly to restore full system functinality.",
+          "actionLabel": "Verify Identity",
+          "nextStep": 6
+        }
       },
       {
         "stepId": 6,

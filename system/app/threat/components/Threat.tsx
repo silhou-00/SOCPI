@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { RotateCcw, ScrollText, HelpCircle, X, ChevronRight } from "lucide-react";
 import threatData from "@/app/data/threat.json";
@@ -16,12 +16,21 @@ interface Explanation {
   body: string;
 }
 
+interface Email {
+  from: string;
+  subject: string;
+  body: string;
+  actionLabel: string;
+  nextStep: number;
+}
+
 interface Step {
   stepId: number;
   speaker: string;
   dialogue: string;
   picture: string;
   choices?: Choice[];
+  email?: Email;
   explanation?: Explanation;
   isEnding?: boolean;
   status?: string;
@@ -55,11 +64,13 @@ export default function Threat() {
 
     if (currentStep.speaker === "Manager") {
       // Angela listens when Manager talks
-      setAngelaPose("/Character/Angela-Idle.png");
+      setTimeout(() => setAngelaPose("/Character/Angela-Idle.png"), 0);
     } else {
       // Angela is talking — show TacticTalk
-      const pose = poseMap[currentStep.picture] || "/Character/Angela-TacticTalk.png";
-      setAngelaPose(pose);
+      setTimeout(() => {
+        const pose = poseMap[currentStep.picture] || "/Character/Angela-TacticTalk.png";
+        setAngelaPose(pose);
+      }, 0);
 
       // After 1.5s transition to Stare (waiting for click)
       if (currentStep.picture !== "angela-disappointed") {
@@ -75,17 +86,19 @@ export default function Threat() {
   useEffect(() => {
     if (!currentStep) return;
 
-    setVisitedSteps((prev) => {
-      if (prev.find((s) => s.stepId === currentStep.stepId)) return prev;
-      return [...prev, currentStep];
-    });
-
-    if (currentStep.explanation) {
-      setExplanations((prev) => {
-        if (prev.find((e) => e.title === currentStep.explanation!.title)) return prev;
-        return [...prev, currentStep.explanation!];
+    setTimeout(() => {
+      setVisitedSteps((prev) => {
+        if (prev.find((s) => s.stepId === currentStep.stepId)) return prev;
+        return [...prev, currentStep];
       });
-    }
+
+      if (currentStep.explanation) {
+        setExplanations((prev) => {
+          if (prev.find((e) => e.title === currentStep.explanation!.title)) return prev;
+          return [...prev, currentStep.explanation!];
+        });
+      }
+    }, 0);
   }, [currentStep]);
 
   if (!currentStep) return null;
@@ -115,7 +128,6 @@ export default function Threat() {
   };
 
   const isSuccess = currentStep.status === "success";
-  const isFailed = currentStep.status === "failed";
 
   return (
     <div className="h-screen w-full flex flex-col overflow-hidden relative">
@@ -256,24 +268,80 @@ export default function Threat() {
             </div>
           </div>
 
-          {/* Dialogue Options — even split, big vibrant buttons */}
-          <div className="flex-1 flex flex-col rounded-2xl border-jungle-mist-800/30 overflow-hidden min-h-0 p-5  space-y-3 border bg-black/30">
-            {realChoices.length > 0 ? (
-              <>
-                {realChoices.map((choice: Choice, idx: number) => (
-                  <button
-                    key={idx}
-                    className="w-full py-4 px-6 text-2xl font-semibold text-white bg-black/80 border-2 border-jungle-mist-500/80 rounded-lg cursor-pointer text-left transition-all duration-200 hover:border-jungle-mist-300 hover:bg-jungle-mist-600 hover:-translate-y-0.5 hover:shadow-[0_4px_24px_rgba(126,168,178,0.2)]"
-                    onClick={() => advanceTo(choice.nextStep)}
-                  >
-                    {choice.label}
-                  </button>
-                ))}
-              </>
+          {/* Dialogue Options OR Custom UI (e.g., Email Simulation) */}
+          <div className="flex-1 flex flex-col rounded-2xl border-jungle-mist-800/30 overflow-hidden min-h-0 border bg-black/30 p-0">
+            {currentStep.email ? (
+              /* Email Simulation UI */
+              <div className="flex-1 flex flex-col w-full h-full bg-slate-50 animate-fade-in relative overflow-hidden">
+                {/* Email Header/App Bar */}
+                <div className="bg-slate-200 border-b border-slate-300 px-4 py-2 flex items-center gap-3 shrink-0">
+                  <div className="flex gap-1.5">
+                    <div className="w-3 h-3 rounded-full bg-red-400" />
+                    <div className="w-3 h-3 rounded-full bg-amber-400" />
+                    <div className="w-3 h-3 rounded-full bg-green-400" />
+                  </div>
+                  <span className="text-xs font-semibold text-slate-500 mx-auto">Inbox - Work Mail</span>
+                </div>
+                
+                {/* Email Metadata */}
+                <div className="bg-white border-b border-slate-200 px-6 py-4 shrink-0">
+                  <h3 className="text-xl font-bold text-slate-800 mb-3">{currentStep.email.subject}</h3>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 font-bold">
+                        N
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-slate-800">
+                          {currentStep.email.from.split(" <")[0]}
+                        </p>
+                        <p className="text-xs text-slate-500">
+                          {currentStep.email.from.includes("<") ? `<${currentStep.email.from.split("<")[1]}` : currentStep.email.from}
+                        </p>
+                      </div>
+                    </div>
+                    <span className="text-xs text-slate-400">10:42 AM (2 minutes ago)</span>
+                  </div>
+                </div>
+
+                {/* Email Body & CTA */}
+                <div className="p-6 flex-1 overflow-y-auto">
+                  <div className="max-w-xl">
+                    <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-line mb-8">
+                      {currentStep.email.body}
+                    </p>
+                    <div className="flex justify-center">
+                      <button
+                        onClick={() => advanceTo(currentStep.email!.nextStep)}
+                        className="py-3 px-8 rounded-md font-bold text-white bg-[#0f172a] hover:bg-slate-800 transition-colors shadow-md cursor-pointer"
+                      >
+                        {currentStep.email.actionLabel}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             ) : (
-              <p className="text-lg text-jungle-mist-100 italic text-center mt-50">
-                Click the dialogue box to continue...
-              </p>
+              /* Standard Dialogue Choices */
+              <div className="p-5 space-y-3 h-full flex flex-col justify-center">
+                {realChoices.length > 0 ? (
+                  <>
+                    {realChoices.map((choice: Choice, idx: number) => (
+                      <button
+                        key={idx}
+                        className="w-full py-4 px-6 text-2xl font-semibold text-white bg-black/80 border-2 border-jungle-mist-500/80 rounded-lg cursor-pointer text-left transition-all duration-200 hover:border-jungle-mist-300 hover:bg-jungle-mist-600 hover:-translate-y-0.5 hover:shadow-[0_4px_24px_rgba(126,168,178,0.2)]"
+                        onClick={() => advanceTo(choice.nextStep)}
+                      >
+                        {choice.label}
+                      </button>
+                    ))}
+                  </>
+                ) : (
+                  <p className="text-lg text-jungle-mist-100 italic text-center mt-auto mb-auto">
+                    Click the dialogue box to continue...
+                  </p>
+                )}
+              </div>
             )}
           </div>
         </div>
