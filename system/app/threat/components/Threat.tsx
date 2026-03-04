@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { RotateCcw, ScrollText, HelpCircle, X, ChevronRight } from "lucide-react";
+import { RotateCcw, ScrollText, HelpCircle, X, ChevronRight, Trash2, Folder, Monitor } from "lucide-react";
 import threatData from "@/app/data/threat.json";
 
 /* ── Types ── */
@@ -24,6 +25,13 @@ interface Email {
   nextStep: number;
 }
 
+interface Malware {
+  appName: string;
+  size: string;
+  actionLabel: string;
+  nextStep: number;
+}
+
 interface Step {
   stepId: number;
   speaker: string;
@@ -31,6 +39,7 @@ interface Step {
   picture: string;
   choices?: Choice[];
   email?: Email;
+  malware?: Malware;
   explanation?: Explanation;
   isEnding?: boolean;
   status?: string;
@@ -45,14 +54,28 @@ const poseMap: Record<string, string> = {
   "angela-disappointed": "/Character/Angela-Stare.png",
 };
 
-export default function Threat() {
-  const scenario = threatData[0];
+function ThreatContent() {
+  const searchParams = useSearchParams();
+  const scenarioId = searchParams.get("scenario") || "phishing-angela-predetermined";
+  
+  const scenario = threatData.find((s) => s.scenarioId === scenarioId) || threatData[0];
+
   const [currentStepId, setCurrentStepId] = useState<number>(1);
   const [explanations, setExplanations] = useState<Explanation[]>([]);
   const [showLogs, setShowLogs] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
   const [angelaPose, setAngelaPose] = useState("/Character/Angela-Idle.png");
   const [visitedSteps, setVisitedSteps] = useState<Step[]>([]);
+
+  // Reset state when scenario changes
+  useEffect(() => {
+    setCurrentStepId(1);
+    setExplanations([]);
+    setVisitedSteps([]);
+    setAngelaPose("/Character/Angela-Idle.png");
+    setShowLogs(false);
+    setShowHelp(false);
+  }, [scenarioId]);
 
   const currentStep: Step | undefined = scenario.steps.find(
     (s: Step) => s.stepId === currentStepId
@@ -321,6 +344,147 @@ export default function Threat() {
                   </div>
                 </div>
               </div>
+            ) : currentStep.malware ? (
+              /* Windows OS Desktop Simulation UI */
+              <div className="flex-1 flex flex-col w-full h-full bg-[#005A9E] animate-fade-in relative overflow-hidden select-none">
+                {/* Windows 11 Inspired Wallpaper Background */}
+                <div className="absolute inset-0 bg-cover bg-center pointer-events-none" style={{ backgroundImage: "linear-gradient(135deg, #024db5, #001040)" }}>
+                  <div className="absolute inset-0 bg-[#0078d4]/10 backdrop-blur-[1px]"></div>
+                  {/* Fake glowing shapes for W11 bloom effect */}
+                  <div className="absolute top-1/4 left-[10%] w-64 h-64 bg-cyan-400/10 rounded-full blur-3xl"></div>
+                  <div className="absolute bottom-1/4 right-[10%] w-64 h-64 bg-blue-600/20 rounded-full blur-3xl"></div>
+                </div>
+
+                {/* Desktop Icons */}
+                <div className="absolute top-4 left-4 flex flex-col gap-5 z-0">
+                  <div className="flex flex-col items-center gap-1 w-16 group cursor-default p-1.5 rounded-sm hover:bg-white/10 transition-colors">
+                    <Trash2 size={24} className="text-white drop-shadow-md opacity-80 group-hover:opacity-100" />
+                    <span className="text-white text-[10px] text-center drop-shadow-md leading-tight">Recycle Bin</span>
+                  </div>
+                  <div className="flex flex-col items-center gap-1 w-16 group cursor-default p-1.5 rounded-sm hover:bg-white/10 transition-colors">
+                    <Folder size={24} fill="#fcd34d" className="text-amber-300 drop-shadow-md" />
+                    <span className="text-white text-[10px] text-center drop-shadow-md leading-tight">Work Files</span>
+                  </div>
+                  <div className="flex flex-col items-center gap-1 w-16 group cursor-default p-1.5 rounded-sm bg-white/10 border border-white/20 shadow-sm">
+                    <Monitor size={24} className="text-blue-300 drop-shadow-md" />
+                    <span className="text-white text-[10px] text-center drop-shadow-md leading-tight line-clamp-2">SpeedUp Setup.exe</span>
+                  </div>
+                </div>
+
+                {/* Windows Taskbar */}
+                <div className="absolute bottom-0 left-0 right-0 h-10 bg-black/60 backdrop-blur-md border-t border-white/10 flex items-center justify-between px-4 z-20">
+                  {/* Left spacer / Widgets area equivalent */}
+                  <div className="w-24"></div>
+
+                  {/* Centered Taskbar Icons */}
+                  <div className="flex items-center gap-2">
+                    {/* Start Button */}
+                    <div className="w-8 h-8 rounded hover:bg-white/10 flex items-center justify-center transition-colors">
+                      <div className="w-3.5 h-3.5 grid grid-cols-2 gap-0.5">
+                        <div className="bg-blue-400 rounded-[1px]"></div>
+                        <div className="bg-blue-400 rounded-[1px]"></div>
+                        <div className="bg-blue-400 rounded-[1px]"></div>
+                        <div className="bg-blue-400 rounded-[1px]"></div>
+                      </div>
+                    </div>
+                    {/* Search */}
+                    <div className="w-8 h-8 rounded hover:bg-white/10 flex items-center justify-center transition-colors text-white">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </div>
+                    {/* File Explorer */}
+                    <div className="w-8 h-8 rounded hover:bg-white/10 flex items-center justify-center transition-colors">
+                      <Folder size={16} fill="#fcd34d" className="text-amber-300" />
+                    </div>
+                    {/* Browser */}
+                    <div className="w-8 h-8 rounded hover:bg-white/10 flex items-center justify-center transition-colors text-red-400">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="21.17" y1="8" x2="12" y2="8"></line><line x1="3.95" y1="6.06" x2="8.54" y2="14"></line><line x1="10.88" y1="21.94" x2="15.46" y2="14"></line></svg>
+                    </div>
+                    {/* Setup Active Icon */}
+                    <div className="w-8 h-8 rounded bg-white/10 relative flex items-center justify-center text-blue-300">
+                      <Monitor size={16} />
+                      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3 h-0.5 bg-blue-400 rounded-full"></div>
+                    </div>
+                  </div>
+
+                  {/* System Tray (Right) */}
+                  <div className="flex items-center gap-3 text-white text-[10px] w-24 justify-end">
+                    <div className="flex flex-col items-end leading-tight tracking-wide">
+                      <span>{new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                      <span>{new Date().toLocaleDateString()}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Simulated Application Window Container */}
+                <div className="relative w-full max-w-[320px] m-auto mb-14 bg-slate-50 rounded-lg shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-slate-500/50 flex flex-col overflow-hidden z-10 transition-transform duration-300 hover:scale-[1.01] max-h-[80%]">
+                  
+                  {/* Standard Windows Title Bar */}
+                  <div className="bg-slate-100 flex items-center justify-between shadow-sm border-b border-slate-300/80 shrink-0">
+                    <div className="flex items-center gap-2 pl-3 py-1.5">
+                      <div className="w-3.5 h-3.5 rounded-sm bg-blue-600 flex items-center justify-center">
+                        <span className="text-[8px] text-white font-bold leading-none">TS</span>
+                      </div>
+                      <span className="text-[11px] font-semibold text-slate-700 tracking-tight">
+                        {currentStep.malware.appName}
+                      </span>
+                    </div>
+                    {/* Fake Windows Window Controls */}
+                    <div className="flex">
+                      <div className="w-10 h-7 flex items-center justify-center hover:bg-slate-200 transition-colors">
+                        <div className="w-2.5 h-px bg-slate-600"></div>
+                      </div>
+                      <div className="w-10 h-7 flex items-center justify-center hover:bg-slate-200 transition-colors">
+                        <div className="w-2.5 h-2.5 border border-slate-600"></div>
+                      </div>
+                      <div className="w-10 h-7 flex items-center justify-center hover:bg-red-500 hover:text-white transition-colors group">
+                        <X size={14} className="text-slate-600 group-hover:text-white" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Installer Content */}
+                  <div className="p-4 bg-white flex flex-col items-center text-center overflow-y-auto overflow-x-hidden custom-scrollbar">
+                    <div className="w-14 h-14 mb-3 bg-linear-to-b from-blue-500 to-blue-700 rounded-2xl shadow-md flex items-center justify-center shrink-0">
+                      <RotateCcw className="text-white w-7 h-7 animate-spin-slow" />
+                    </div>
+                    
+                    <h3 className="text-base font-bold text-slate-800 mb-0.5 shrink-0">
+                      Terminal SpeedUp Pro
+                    </h3>
+                    <p className="text-[10px] text-slate-500 mb-4 font-medium shrink-0">
+                      Version 4.2.0 • Size: {currentStep.malware.size}
+                    </p>
+
+                    <div className="w-full bg-slate-50 rounded-md p-2.5 mb-4 border border-slate-200 text-left shrink-0">
+                      <h4 className="text-[9px] font-bold text-slate-700 uppercase mb-1.5 tracking-wider">Features Included:</h4>
+                      <ul className="text-[10px] text-slate-600 space-y-1.5">
+                        <li className="flex items-center gap-2">
+                          <span className="text-green-500 font-bold">✓</span> Instant Cache Cleansing
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <span className="text-green-500 font-bold">✓</span> Registry Optimization
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <span className="text-green-500 font-bold">✓</span> Background Process Manager
+                        </li>
+                      </ul>
+                    </div>
+
+                    {/* Action CTA */}
+                    <button
+                      onClick={() => advanceTo(currentStep.malware!.nextStep)}
+                      className="w-full py-2.5 px-4 rounded-md text-xs font-bold text-white bg-[#0067c0] hover:bg-[#005a9e] transition-colors shadow-sm cursor-pointer tracking-wide flex items-center justify-center gap-2 border border-transparent focus:outline-hidden focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 shrink-0"
+                    >
+                      {currentStep.malware.actionLabel}
+                      <ChevronRight size={14} />
+                    </button>
+                    
+                    <p className="text-[8px] text-slate-400 mt-3 leading-tight shrink-0">
+                      By clicking install, you agree to our Terms of Service and Privacy Policy. Recommended for administrative systems.
+                    </p>
+                  </div>
+                </div>
+              </div>
             ) : (
               /* Standard Dialogue Choices */
               <div className="p-5 space-y-3 h-full flex flex-col justify-center">
@@ -475,5 +639,13 @@ export default function Threat() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function Threat() {
+  return (
+    <Suspense fallback={<div className="h-screen w-full bg-black/90" />}>
+      <ThreatContent />
+    </Suspense>
   );
 }

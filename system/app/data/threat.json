@@ -127,5 +127,133 @@
         "status": "failed"
       }
     ]
+  },
+  {
+    "scenarioId": "malware-angela-predetermined",
+    "title": "Malware & Spyware",
+    "steps": [
+      {
+        "stepId": 1,
+        "speaker": "Angela",
+        "dialogue": "Good day, Manager. I see you are attempting to process the quarterly financial reports. However, the current system load on your terminal is unusually high.",
+        "picture": "angela-neutral",
+        "choices": [
+          { "label": "Continue", "nextStep": 2 }
+        ]
+      },
+      {
+        "stepId": 2,
+        "speaker": "Manager",
+        "dialogue": "Yes, everything is running incredibly slow. I found a free 'Terminal SpeedUp Pro' utility online. It claims it can clear the cache and optimize our systems instantly.",
+        "picture": "angela-listening",
+        "choices": [
+          { "label": "Continue", "nextStep": 3 }
+        ]
+      },
+      {
+        "stepId": 3,
+        "speaker": "Angela",
+        "dialogue": "I must advise caution. Downloading unverified third-party utility software from unofficial sources bypasses our standard security protocols.",
+        "picture": "angela-alert",
+        "choices": [
+          { "label": "Continue", "nextStep": 4 }
+        ]
+      },
+      {
+        "stepId": 4,
+        "speaker": "Manager",
+        "dialogue": "We don't have time to wait for the IT department to run a diagnostic. The deadline is in one hour. Present the installer to me.",
+        "picture": "angela-listening",
+        "choices": [
+          { "label": "Continue", "nextStep": 5 }
+        ]
+      },
+      {
+        "stepId": 5,
+        "speaker": "Angela",
+        "dialogue": "As you command, Manager. The installer interface is now active on your terminal.",
+        "picture": "angela-neutral",
+        "malware": {
+          "appName": "Terminal SpeedUp Pro",
+          "size": "14.2 MB",
+          "actionLabel": "Install Free Optimizer",
+          "nextStep": 6
+        }
+      },
+      {
+        "stepId": 6,
+        "speaker": "Angela",
+        "dialogue": "Processing... The software has been installed. System performance has... not improved. In fact, CPU usage has just spiked to 99%.",
+        "picture": "angela-alert",
+        "choices": [
+          { "label": "Continue", "nextStep": 7 }
+        ]
+      },
+      {
+        "stepId": 7,
+        "speaker": "Manager",
+        "dialogue": "What is going on? My screen is freezing, and my saved passwords for the administrative portal just vanished from the browser.",
+        "picture": "angela-listening",
+        "choices": [
+          { "label": "Continue", "nextStep": 8 }
+        ]
+      },
+      {
+        "stepId": 8,
+        "speaker": "Angela",
+        "dialogue": "Scanning... I have detected unauthorized background processes. A keylogger has been embedded into your terminal. It is actively recording your keystrokes and transmitting your passwords to an external IP address.",
+        "picture": "angela-disappointed",
+        "choices": [
+          { "label": "Continue", "nextStep": 9 }
+        ]
+      },
+      {
+        "stepId": 9,
+        "speaker": "Manager",
+        "dialogue": "Shut it down immediately! How did a simple optimizer program do this?",
+        "picture": "angela-listening",
+        "choices": [
+          { "label": "Continue", "nextStep": 10 }
+        ]
+      },
+      {
+        "stepId": 10,
+        "speaker": "Angela",
+        "dialogue": "Because it was not an optimizer. You have infected our network with 'Malware and Spyware.' This is malicious software designed to infiltrate a device to steal personal information.",
+        "picture": "angela-explaining",
+        "explanation": {
+          "title": "What is Malware?",
+          "body": "Malware (malicious software) is any software intentionally designed to cause damage to a computer, server, client, or computer network. Spyware is a specific type of malware that gathers information about a person or organization without their knowledge."
+        },
+        "choices": [
+          { "label": "Continue", "nextStep": 11 }
+        ]
+      },
+      {
+        "stepId": 11,
+        "speaker": "Angela",
+        "dialogue": "This specific use case—hiding spyware inside 'free' utility tools—is highly common and increasing rapidly. In fact, malware compromised over one billion passwords globally within a single twelve-month period.",
+        "picture": "angela-explaining",
+        "explanation": {
+          "title": "The Threat Scale",
+          "body": "Malware hiding in plain sight (Trojan horses) accounts for a massive portion of data breaches. Infostealers are currently the most active threat, capable of harvesting one billion credentials in a single year across global networks."
+        },
+        "choices": [
+          { "label": "Continue", "nextStep": 12 }
+        ]
+      },
+      {
+        "stepId": 12,
+        "speaker": "Angela",
+        "dialogue": "To mitigate future disasters, adhere to the protection protocols: Only download software from official, trusted sources, keep systems patched, and ensure reputable antivirus software is active. I have quarantined your terminal. Try to reflect on your haste.",
+        "picture": "angela-disappointed",
+        "explanation": {
+          "title": "Malware Prevention",
+          "body": "1. Trusted Sources — Never download third-party tools from unverified websites.\n2. Patch Management — Keep OS and software updated to close security vulnerabilities.\n3. Endpoint Protection — Use enterprise-grade antivirus/EDR to detect and block threats."
+        },
+        "isEnding": true,
+        "status": "failed"
+      }
+    ]
   }
 ]
