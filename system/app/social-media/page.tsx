@@ -1,4 +1,4 @@
-import SocialMedia from "@/app/components/SocialMedia";
+import SocialMedia from "./components/SocialMedia";
 
 export default function SocialMediaPage() {
   return <SocialMedia />;
