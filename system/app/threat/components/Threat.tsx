@@ -45,7 +45,7 @@ interface Step {
   status?: string;
 }
 
-/* ── Angela Pose Mapping ── */
+/* ── Angela Pose Model Mapping ── */
 const poseMap: Record<string, string> = {
   "angela-neutral": "/Character/Angela-Idle.png",
   "angela-listening": "/Character/Angela-Idle.png",
