@@ -67,6 +67,7 @@ function ThreatContent() {
   const [angelaPose, setAngelaPose] = useState("/Character/Angela-Idle.png");
   const [visitedSteps, setVisitedSteps] = useState<Step[]>([]);
 
+  //FUNCTIONS
   // Reset state when scenario changes
   useEffect(() => {
     setCurrentStepId(1);
