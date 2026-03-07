@@ -57,7 +57,7 @@ const poseMap: Record<string, string> = {
 function ThreatContent() {
   const searchParams = useSearchParams();
   const scenarioId = searchParams.get("scenario") || "phishing-angela-predetermined";
-  
+
   const scenario = threatData.find((s) => s.scenarioId === scenarioId) || threatData[0];
 
   const [currentStepId, setCurrentStepId] = useState<number>(1);
@@ -67,7 +67,7 @@ function ThreatContent() {
   const [angelaPose, setAngelaPose] = useState("/Character/Angela-Idle.png");
   const [visitedSteps, setVisitedSteps] = useState<Step[]>([]);
 
-  //FUNCTIONS
+  //FUNCTIONS OF 2 MALWARE SIMULATIONS
   // Reset state when scenario changes
   useEffect(() => {
     setCurrentStepId(1);
@@ -210,19 +210,17 @@ function ThreatContent() {
 
           {/* Dialogue Box — overlays lower portion, text at top */}
           <div
-            className={`absolute bottom-0 left-0 right-0 z-20 h-[35%] mx-4 mb-4 rounded-xl border border-jungle-mist-800/30 bg-black/80 px-6 py-5 flex flex-col justify-start transition-all duration-200 select-none ${
-              isContinueOnly && !currentStep.isEnding
+            className={`absolute bottom-0 left-0 right-0 z-20 h-[35%] mx-4 mb-4 rounded-xl border border-jungle-mist-800/30 bg-black/80 px-6 py-5 flex flex-col justify-start transition-all duration-200 select-none ${isContinueOnly && !currentStep.isEnding
                 ? "cursor-pointer hover:bg-black/85 hover:border-jungle-mist-600/40"
                 : ""
-            }`}
+              }`}
             onClick={handleDialogueClick}
           >
             {/* Speaker Name */}
             <div className="flex items-center justify-between mb-3">
               <span
-                className={`text-lg font-bold uppercase tracking-[0.2em] ${
-                  isAngela ? "text-jungle-mist-400" : "text-white"
-                }`}
+                className={`text-lg font-bold uppercase tracking-[0.2em] ${isAngela ? "text-jungle-mist-400" : "text-white"
+                  }`}
               >
                 {currentStep.speaker}
               </span>
@@ -236,9 +234,8 @@ function ThreatContent() {
 
             {/* Dialogue Text */}
             <p
-              className={`text-2xl leading-8 animate-fade-in ${
-                isAngela ? "text-jungle-mist-300" : "text-white"
-              }`}
+              className={`text-2xl leading-8 animate-fade-in ${isAngela ? "text-jungle-mist-300" : "text-white"
+                }`}
             >
               {isAngela ? `"${currentStep.dialogue}"` : currentStep.dialogue}
             </p>
@@ -246,11 +243,10 @@ function ThreatContent() {
             {/* Ending: Restart inside dialogue box */}
             {currentStep.isEnding && (
               <button
-                className={`flex items-center justify-center mt-20 gap-2 w-full py-3.5 px-5 text-base font-bold border rounded-lg cursor-pointer transition-all duration-200 hover:-translate-y-0.5 ${
-                  isSuccess
+                className={`flex items-center justify-center mt-20 gap-2 w-full py-3.5 px-5 text-base font-bold border rounded-lg cursor-pointer transition-all duration-200 hover:-translate-y-0.5 ${isSuccess
                     ? "text-green-400 border-green-500/40 bg-green-500/10 hover:bg-green-500/20"
                     : "text-red-400 border-red-500/40 bg-red-500/10 hover:bg-red-500/20"
-                }`}
+                  }`}
                 onClick={(e) => {
                   e.stopPropagation();
                   handleRestart();
@@ -306,7 +302,7 @@ function ThreatContent() {
                   </div>
                   <span className="text-xs font-semibold text-slate-500 mx-auto">Inbox - Work Mail</span>
                 </div>
-                
+
                 {/* Email Metadata */}
                 <div className="bg-white border-b border-slate-200 px-6 py-4 shrink-0">
                   <h3 className="text-xl font-bold text-slate-800 mb-3">{currentStep.email.subject}</h3>
@@ -418,7 +414,7 @@ function ThreatContent() {
 
                 {/* Simulated Application Window Container */}
                 <div className="relative w-full max-w-[320px] m-auto mb-14 bg-slate-50 rounded-lg shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-slate-500/50 flex flex-col overflow-hidden z-10 transition-transform duration-300 hover:scale-[1.01] max-h-[80%]">
-                  
+
                   {/* Standard Windows Title Bar */}
                   <div className="bg-slate-100 flex items-center justify-between shadow-sm border-b border-slate-300/80 shrink-0">
                     <div className="flex items-center gap-2 pl-3 py-1.5">
@@ -448,7 +444,7 @@ function ThreatContent() {
                     <div className="w-14 h-14 mb-3 bg-linear-to-b from-blue-500 to-blue-700 rounded-2xl shadow-md flex items-center justify-center shrink-0">
                       <RotateCcw className="text-white w-7 h-7 animate-spin-slow" />
                     </div>
-                    
+
                     <h3 className="text-base font-bold text-slate-800 mb-0.5 shrink-0">
                       Terminal SpeedUp Pro
                     </h3>
@@ -479,7 +475,7 @@ function ThreatContent() {
                       {currentStep.malware.actionLabel}
                       <ChevronRight size={14} />
                     </button>
-                    
+
                     <p className="text-[8px] text-slate-400 mt-3 leading-tight shrink-0">
                       By clicking install, you agree to our Terms of Service and Privacy Policy. Recommended for administrative systems.
                     </p>
@@ -531,19 +527,17 @@ function ThreatContent() {
               {visitedSteps.map((step, idx) => (
                 <div
                   key={idx}
-                  className={`p-4 rounded-xl border ${
-                    step.stepId === currentStepId
+                  className={`p-4 rounded-xl border ${step.stepId === currentStepId
                       ? "border-jungle-mist-500/40 bg-jungle-mist-500/10"
                       : "border-jungle-mist-800/20 bg-black/30"
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center gap-2 mb-1.5">
                     <span className="text-[0.6rem] font-bold uppercase tracking-widest text-jungle-mist-600">
                       Step {step.stepId}
                     </span>
-                    <span className={`text-[0.6rem] font-bold uppercase tracking-widest ${
-                      step.speaker === "Angela" ? "text-jungle-mist-400" : "text-white/70"
-                    }`}>
+                    <span className={`text-[0.6rem] font-bold uppercase tracking-widest ${step.speaker === "Angela" ? "text-jungle-mist-400" : "text-white/70"
+                      }`}>
                       — {step.speaker}
                     </span>
                     {step.stepId === currentStepId && (
@@ -552,9 +546,8 @@ function ThreatContent() {
                       </span>
                     )}
                   </div>
-                  <p className={`text-sm leading-6 ${
-                    step.speaker === "Angela" ? "text-jungle-mist-300" : "text-jungle-mist-200"
-                  }`}>
+                  <p className={`text-sm leading-6 ${step.speaker === "Angela" ? "text-jungle-mist-300" : "text-jungle-mist-200"
+                    }`}>
                     {step.speaker === "Angela" ? `"${step.dialogue}"` : step.dialogue}
                   </p>
                 </div>
