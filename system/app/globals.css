@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/* COLOR PALETTES */
 @theme {
   /** Color for Components */
   --color-jungle-mist-50: #f5f9fa;
