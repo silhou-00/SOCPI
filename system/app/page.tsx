@@ -47,8 +47,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="h-screen w-full flex flex-col overflow-hidden relative">
-      {/* ── Gradient Background (matching other pages) ── */}
+    <div className="h-screen w-full flex flex-col overflow-hidden relative group/page">
+      {/* ── Gradient Background ── */}
       <div
         className="absolute inset-0 z-0"
         style={{
@@ -56,6 +56,24 @@ export default function Home() {
             "linear-gradient(0deg, rgba(19,19,38,1) 0%, rgba(35,37,59,1) 50%)",
         }}
       />
+
+      {/* ── Animated Background Grid ── */}
+      <div 
+        className="absolute inset-0 z-0 opacity-20 pointer-events-none transition-opacity duration-1000 group-hover/page:opacity-30"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, rgba(126,168,178,0.1) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(126,168,178,0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: '40px 40px',
+          maskImage: 'radial-gradient(ellipse at center, black 40%, transparent 80%)',
+          WebkitMaskImage: 'radial-gradient(ellipse at center, black 40%, transparent 80%)'
+        }}
+      />
+      
+      {/* ── Ambient Glowing Accents ── */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-jungle-mist-500/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-500/10 rounded-full blur-[150px] pointer-events-none mix-blend-screen" />
 
       {/* ── Content Overlay ── */}
       <div className="relative z-10 flex flex-col h-full pl-24 pt-16">
@@ -106,7 +124,12 @@ export default function Home() {
               return (
                 <div key={btn.id} className="flex flex-row items-center gap-6">
                   {/* Main Button */}
-                  <div>
+                  <div className="relative">
+                    {/* Glowing highlight behind active button */}
+                    {isDropdown && threatOpen && (
+                      <div className="absolute inset-0 bg-jungle-mist-400/20 blur-xl rounded-2xl transition-opacity duration-300"></div>
+                    )}
+                    
                     <a
                       href={isDropdown ? undefined : btn.href}
                       onClick={(e) => {
@@ -115,17 +138,26 @@ export default function Home() {
                           setThreatOpen((prev) => !prev);
                         }
                       }}
-                      className="flex items-center gap-4 w-85 py-5 px-8 rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl text-white font-bold text-xl tracking-wide shadow-lg no-underline cursor-pointer transition-all duration-200 hover:border-white/30 hover:bg-white/10 hover:-translate-y-0.5 select-none relative group overflow-hidden"
+                      className={`flex items-center gap-4 w-85 py-5 px-8 rounded-2xl border border-white/10 backdrop-blur-xl font-bold text-xl tracking-wide shadow-xl no-underline cursor-pointer transition-all duration-300 select-none relative group overflow-hidden
+                        ${isDropdown && threatOpen 
+                          ? "bg-white/10 border-white/40 text-white shadow-[0_0_30px_rgba(126,168,178,0.2)] translate-x-2" 
+                          : "bg-black/40 text-jungle-mist-100 hover:bg-white/10 hover:border-white/30 hover:text-white hover:-translate-y-1 hover:shadow-[0_10px_40px_-10px_rgba(126,168,178,0.3)] hover:translate-x-1"
+                        }
+                      `}
                     >
                       {/* Subtle inner top highlight */}
-                      <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/20 to-transparent"></div>
+                      <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/30 to-transparent opacity-50 group-hover:opacity-100 transition-opacity"></div>
                       
-                      <Icon size={24} className="shrink-0 text-jungle-mist-200 group-hover:text-white transition-colors" />
-                      <span>{btn.label}</span>
+                      {/* Hover gradient overlay */}
+                      <div className="absolute inset-0 bg-linear-to-r from-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+
+                      <Icon size={24} className={`shrink-0 transition-colors duration-300 ${isDropdown && threatOpen ? "text-jungle-mist-200" : "text-jungle-mist-400 group-hover:text-jungle-mist-200"}`} />
+                      <span className="relative z-10">{btn.label}</span>
+                      
                       {isDropdown && (
                         <ChevronRight
                           size={20}
-                          className={`ml-auto text-jungle-mist-400 group-hover:text-white transition-all duration-300 ${
+                          className={`ml-auto transition-transform duration-300 ${isDropdown && threatOpen ? "text-jungle-mist-200" : "text-jungle-mist-500 group-hover:text-jungle-mist-300"} ${
                             threatOpen ? "" : "rotate-180"
                           }`}
                         />
@@ -135,15 +167,16 @@ export default function Home() {
 
                   {/* Threat Dropdown — appears to the right of the button */}
                   {isDropdown && threatOpen && (
-                    <div className="flex flex-col gap-3 animate-fade-slide-in">
+                    <div className="flex flex-col gap-3 animate-fade-slide-in ml-4">
                       {btn.subLinks!.map((sub) => (
                         <a
                           key={sub.href}
                           href={sub.href}
-                          className="flex items-center gap-3 w-73 py-4 px-6 rounded-xl border border-white/5 bg-black/30 backdrop-blur-lg text-jungle-mist-200 font-semibold text-base no-underline cursor-pointer transition-all duration-200 hover:border-white/20 hover:bg-white/10 hover:text-white group"
+                          className="flex items-center gap-3 w-73 py-4 px-6 rounded-xl border border-white/5 bg-black/40 backdrop-blur-lg text-jungle-mist-300 font-semibold text-base no-underline cursor-pointer transition-all duration-300 hover:border-jungle-mist-500/50 hover:bg-jungle-mist-900/40 hover:text-white hover:translate-x-2 hover:shadow-[0_0_20px_rgba(126,168,178,0.15)] group relative overflow-hidden"
                         >
-                          <ChevronRight size={16} className="text-jungle-mist-500 group-hover:text-white transition-colors" />
-                          {sub.label}
+                          <div className="absolute left-0 top-0 bottom-0 w-1 bg-jungle-mist-400 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 rounded-l-xl"></div>
+                          <ChevronRight size={16} className="text-jungle-mist-600 group-hover:text-jungle-mist-400 transition-colors duration-300 group-hover:translate-x-1" />
+                          <span className="relative z-10">{sub.label}</span>
                         </a>
                       ))}
                     </div>
